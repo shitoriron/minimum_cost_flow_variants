@@ -35,7 +35,7 @@ void add_edge(graph &G, ll from, ll to, ll cap, ll cost){
 	G[to].push_back(edge(from, 0, -cost, G[from].size()-1));
 }
 
-ll SuccessiveShortestPath(graph &G, vector<ll> &excess){
+ll SuccessiveShortestPath_Unit(graph &G, vector<ll> &excess){
 	ll V = G.size();
 	map<ll, ll>  E, D;
 	REP(i, V){
@@ -86,29 +86,22 @@ ll SuccessiveShortestPath(graph &G, vector<ll> &excess){
 		// update potential
 		for(int i=0;i<V;i++) pot[i] += (visited[i] ? dist[i] : dist[t]);
 
-		// get flow amount
-		ll f = min(E[s], -D[t]);
-		ll d = f;
-		for(int v=t;v!=s;v=prevv[v]){
-			d = min(d, G[prevv[v]][preve[v]].cap);
-		}
-
 		// update total cost
 		for(int v=t;v!=s;v=prevv[v]){
-			total_cost += d*G[prevv[v]][preve[v]].cost;
+			total_cost += G[prevv[v]][preve[v]].cost;
 		}
 
 		// update excess and deficit
-		E[s] -= d;
+		E[s] -= 1;
 		if(E[s]==0) E.erase(s);
-		D[t] += d;
+		D[t] += 1;
 		if(D[t]==0) D.erase(t);
 
 		// update residual graph
 		for(int v=t;v!=s;v=prevv[v]){
 			edge &e = G[prevv[v]][preve[v]];
-			e.cap -= d;
-			G[v][e.rev].cap += d;
+			e.cap -= 1;
+			G[v][e.rev].cap += 1;
 		}
 	}
 	return total_cost;
@@ -153,8 +146,8 @@ int main(){
 	}
 	*/
 
-	ll res = SuccessiveShortestPath(G, excess);
+	ll res = SuccessiveShortestPath_Unit(G, excess);
 	cout << res << endl;
-	print_flow(G);
+	//print_flow(G);
     return 0;
 }
