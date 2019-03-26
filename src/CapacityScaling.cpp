@@ -150,7 +150,6 @@ ll CapacityScaling(graph &G, vector<ll> &excess){
 
 			// update potential
 			for(int i=0;i<V;i++) pot[i] += (visited[i] ? dist[i] : dist[t]);
-
 			
 			// update total cost
 			///*

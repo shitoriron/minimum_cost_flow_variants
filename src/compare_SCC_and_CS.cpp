@@ -383,13 +383,11 @@ int main(int argc, char* argv[]){
 
 	clock_t start, end;
 
-	/*
 	start = clock();
 	ll res1 = SuccessiveShortestPath_Unit(G1, excess1);
 	end = clock();
 	double time1 = (double)(end-start)/CLOCKS_PER_SEC;
 	printf("SSC_Unit: res %ld, time: %f\n", res1, time1);
-	*/
 
 	start = clock();
 	ll res2 = CapacityScaling(G2, excess2, scaling_factor);
